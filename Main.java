@@ -63,7 +63,7 @@ public class Main {
         setBounds(col4, row2, 150, 35);
         setHorizontalAlignment(CENTER);
     }};
-    static JButton btnAddAction1 = new JButton("Sample"){{
+    static JButton btnAddAction1 = new JButton("Remove"){{
         setBounds(col5, row2, 150, 35);
         setHorizontalAlignment(CENTER);
         setFocusable(false);
@@ -86,7 +86,7 @@ public class Main {
         setBounds(col4, row3, 150, 35);
         setHorizontalAlignment(CENTER);
     }};
-    static JButton btnAddAction2 = new JButton("Sample"){{
+    static JButton btnAddAction2 = new JButton("Remove"){{
         setBounds(col5, row3, 150, 35);
         setHorizontalAlignment(CENTER);
         setFocusable(false);
@@ -109,7 +109,7 @@ public class Main {
         setBounds(col4, row4, 150, 35);
         setHorizontalAlignment(CENTER);
     }};
-    static JButton btnAddAction3 = new JButton("Sample"){{
+    static JButton btnAddAction3 = new JButton("Remove"){{
         setBounds(col5, row4, 150, 35);
         setHorizontalAlignment(CENTER);
         setFocusable(false);
@@ -132,7 +132,7 @@ public class Main {
         setBounds(col4, row5, 150, 35);
         setHorizontalAlignment(CENTER);
     }};
-    static JButton btnAddAction4 = new JButton("Sample"){{
+    static JButton btnAddAction4 = new JButton("Remove"){{
         setBounds(col5, row5, 150, 35);
         setHorizontalAlignment(CENTER);
         setFocusable(false);
@@ -146,6 +146,7 @@ public class Main {
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
             setLayout(null);
+                getContentPane().setBackground(Color.white);
         }};
         
         mainFrame.add(lbl1);   
