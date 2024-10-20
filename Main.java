@@ -1,194 +1,191 @@
-import java.awt.Color;
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Main {
-    
-    static int col1 = 10,
-            col2=col1+151,
-            col3=col2+151,
-            col4=col3+151,
-            col5=col4+151;
-    static int row1 = 10,
-            row2=row1+36,
-            row3=row2+36,
-            row4=row3+36,
-            row5=row4+36,
-            row6=row5+36;
+    public static ArrayList<ReviewPanel> arraylist = new ArrayList<>();//the scroll pane
+    static JPanel pnlForScroll = new JPanel() {{
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        }};
+    public static void refreshPanels() {
+        // Sort the arraylist by rating in descending order
+        Collections.sort(arraylist, (panel1, panel2) -> Integer.compare(panel2.rating, panel1.rating));
 
-    // Just Labels - Column Headers
-    static JLabel lbl1 = new JLabel("Restaurant"){{
-        setBounds(col1, row1, 150, 35);
-        setHorizontalAlignment(CENTER);
-        setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-    }};     
-    static JLabel lbl2 = new JLabel("Reviewer"){{
-        setBounds(col2, row1, 150, 35);
-        setHorizontalAlignment(CENTER);
-        setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-    }};      
-    static JLabel lbl3 = new JLabel("Review"){{
-        setBounds(col3, row1, 150, 35);
-        setHorizontalAlignment(CENTER);
-        setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-    }};
-    static JLabel lbl4 = new JLabel("Rating"){{
-        setBounds(col4, row1, 150, 35);
-        setHorizontalAlignment(CENTER);
-        setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-    }};
-    static JLabel lbl5 = new JLabel("Rating"){{
-        setBounds(col5, row1, 150, 35);
-        setHorizontalAlignment(CENTER);
-        setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-    }};
-    
-    // 1st Row of Data
-    static JLabel lblRestaurant1 = new JLabel("Sample"){{
-        setBounds(col1, row2, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblReviewer1 = new JLabel("Sample"){{
-        setBounds(col2, row2, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblReview1 = new JLabel("Sample"){{
-        setBounds(col3, row2, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblRating1 = new JLabel("Sample"){{
-        setBounds(col4, row2, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JButton btnAddAction1 = new JButton("Remove"){{
-        setBounds(col5, row2, 150, 35);
-        setHorizontalAlignment(CENTER);
-        setFocusable(false);
-    }};
-        
-    // 2nd Row of Data
-    static JLabel lblRestaurant2 = new JLabel("Sample"){{
-        setBounds(col1, row3, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblReviewer2 = new JLabel("Sample"){{
-        setBounds(col2, row3, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblReview2 = new JLabel("Sample"){{
-        setBounds(col3, row3, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblRating2 = new JLabel("Sample"){{
-        setBounds(col4, row3, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JButton btnAddAction2 = new JButton("Remove"){{
-        setBounds(col5, row3, 150, 35);
-        setHorizontalAlignment(CENTER);
-        setFocusable(false);
-    }};
-    
-    // 3rd Row of Data
-    static JLabel lblRestaurant3 = new JLabel("Sample"){{
-        setBounds(col1, row4, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblReviewer3 = new JLabel("Sample"){{
-        setBounds(col2, row4, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblReview3 = new JLabel("Sample"){{
-        setBounds(col3, row4, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblRating3 = new JLabel("Sample"){{
-        setBounds(col4, row4, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JButton btnAddAction3 = new JButton("Remove"){{
-        setBounds(col5, row4, 150, 35);
-        setHorizontalAlignment(CENTER);
-        setFocusable(false);
-    }};
-    
-    // 4th Row of Data
-    static JLabel lblRestaurant4 = new JLabel("Sample"){{
-        setBounds(col1, row5, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblReviewer4 = new JLabel("Sample"){{
-        setBounds(col2, row5, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblReview4 = new JLabel("Sample"){{
-        setBounds(col3, row5, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JLabel lblRating4 = new JLabel("Sample"){{
-        setBounds(col4, row5, 150, 35);
-        setHorizontalAlignment(CENTER);
-    }};
-    static JButton btnAddAction4 = new JButton("Remove"){{
-        setBounds(col5, row5, 150, 35);
-        setHorizontalAlignment(CENTER);
-        setFocusable(false);
-    }};
+        pnlForScroll.removeAll(); // Clear existing components
 
+        for (ReviewPanel rpanel : arraylist) {
+            pnlForScroll.add(rpanel);
+        }
 
+        pnlForScroll.revalidate(); // Refresh layout
+        pnlForScroll.repaint(); // Update display
+    }
+
+    
     public static void main(String[] args) {
         // The Frame
-        JFrame mainFrame = new JFrame("Restaurant Reviewer"){{
+        JFrame mainFrame = new JFrame("Restaurant Reviewer") {{
             setSize(790, 275);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setLocationRelativeTo(null);
             setLayout(null);
-                getContentPane().setBackground(Color.white);
+            setResizable(false);
         }};
-        
-        mainFrame.add(lbl1);   
-        mainFrame.add(lbl2);  
-        mainFrame.add(lbl3);      
-        mainFrame.add(lbl4);          
+
+        // Just Labels - Column Headers
+        JLabel lbl1 = new JLabel("Restaurant") {{
+            setBounds(10, 10, 150, 35);
+            setHorizontalAlignment(CENTER);
+            setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        }};
+        mainFrame.add(lbl1);
+        JLabel lbl2 = new JLabel("Reviewer") {{
+            setBounds(161, 10, 150, 35);
+            setHorizontalAlignment(CENTER);
+            setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        }};
+        mainFrame.add(lbl2);
+        JLabel lbl3 = new JLabel("Review") {{
+            setBounds(312, 10, 150, 35);
+            setHorizontalAlignment(CENTER);
+            setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        }};
+        mainFrame.add(lbl3);
+        JLabel lbl4 = new JLabel("Rating") {{
+            setBounds(463, 10, 150, 35);
+            setHorizontalAlignment(CENTER);
+            setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        }};
+        mainFrame.add(lbl4);
+        JLabel lbl5 = new JLabel("Action") {{
+            setBounds(614, 10, 150, 35);
+            setHorizontalAlignment(CENTER);
+            setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        }};
         mainFrame.add(lbl5);
         
-        mainFrame.add(lblRestaurant1);
-        mainFrame.add(lblReviewer1);
-        mainFrame.add(lblReview1);
-        mainFrame.add(lblRating1);
-        mainFrame.add(btnAddAction1);
-        
-        mainFrame.add(lblRestaurant2);
-        mainFrame.add(lblReviewer2);
-        mainFrame.add(lblReview2);
-        mainFrame.add(lblRating2);
-        mainFrame.add(btnAddAction2);
-        
-        mainFrame.add(lblRestaurant3);
-        mainFrame.add(lblReviewer3);
-        mainFrame.add(lblReview3);
-        mainFrame.add(lblRating3);
-        mainFrame.add(btnAddAction3);
-        
-        mainFrame.add(lblRestaurant4);
-        mainFrame.add(lblReviewer4);
-        mainFrame.add(lblReview4);
-        mainFrame.add(lblRating4);
-        mainFrame.add(btnAddAction4);
-        
+        JScrollPane scrollPane = new JScrollPane() {{
+            setBounds(10, 46, 755, 144);
+            setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        }};
+        scrollPane.setViewportView(pnlForScroll);
+        mainFrame.add(scrollPane);
         // Add button
-        JButton btnAdd = new JButton("Add"){{
-            setBounds(col1, row6, 754, 35);
+        JButton btnAdd = new JButton("Add") {{
+            setBounds(10, 190, 754, 35);
             setHorizontalAlignment(CENTER);
             setFocusable(false);
         }};
         mainFrame.add(btnAdd);
+
+        // About panels
         
+        ReviewPanel reviewPanel = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 1);
+        arraylist.add(reviewPanel);
+        ReviewPanel reviewPanel1 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 2);
+        arraylist.add(reviewPanel1);
+        ReviewPanel reviewPanel2 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 3);
+        arraylist.add(reviewPanel2);
+        ReviewPanel reviewPanel3 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 4);
+        arraylist.add(reviewPanel3);
+        ReviewPanel reviewPanel4 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 5);
+        arraylist.add(reviewPanel4);
+        ReviewPanel reviewPanel5 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 5);
+        arraylist.add(reviewPanel5);
+        
+        refreshPanels();
+       
+
         mainFrame.setVisible(true);
     }
-    public void setLabels(String a, String b, String c, String d, String e){
+
+    public static class ReviewPanel extends JPanel {
+//        private ArrayList<ReviewPanel> panelList; // Reference to the global ArrayList
+        public int rating;                // Field for the rating
+        public String restaurant;         // Field for the restaurant name
+        public String reviewer;           // Field for the reviewer name
+        public String review;             // Field for the review text
+
+        // Constructor
+        private ReviewPanel(String sRestaurant, String sReviewer, String sReview, int nRating) {
+            // Store values in fields
+            this.restaurant = sRestaurant; // Store restaurant name
+            this.reviewer = sReviewer;     // Store reviewer name
+            this.review = sReview;         // Store review text
+            this.rating = nRating;         // Store the rating
+
+            // Set up panel dimensions
+            Dimension dimSize = new Dimension(737, 35);
+            Dimension dimEachSize = new Dimension(150, 35);
+
+            setPreferredSize(dimSize);
+            setMaximumSize(dimSize);
+            setMinimumSize(dimSize);
+            setLayout(null);            
+            setBorder(BorderFactory.createLineBorder(Color.lightGray, 1));
+//            setBackground(Color.red);
+
+            // Create and add labels
+            addLabel(this.restaurant, 0, dimEachSize);
+            addLabel(this.reviewer, 151, dimEachSize);
+            addLabel(this.review, 302, dimEachSize);
+            addRatingLabel(this.rating, 453, dimEachSize);
+
+            // Create and add remove button
+            addRemoveButton(604, dimEachSize);
+        }
+
+        // Static factory method to create a ReviewPanel instance
+        public static ReviewPanel create(String sRestaurant, String sReviewer, String sReview, int nRating) {
+            return new ReviewPanel(sRestaurant, sReviewer, sReview, nRating);
+        }
+
+        // Method to add a label
+        private void addLabel(String text, int x, Dimension size) {
+            JLabel label = new JLabel(text);
+            label.setHorizontalAlignment(SwingConstants.CENTER);
+            label.setPreferredSize(size);
+            label.setMaximumSize(size);
+            label.setMinimumSize(size);
+            label.setBounds(x, 0, size.width, size.height);
+            add(label);
+        }
+
+        // Method to add the rating label
+        private void addRatingLabel(int rating, int x, Dimension size) {
+            JLabel ratingLabel = new JLabel(String.valueOf(rating));
+            ratingLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            ratingLabel.setPreferredSize(size);
+            ratingLabel.setMaximumSize(size);
+            ratingLabel.setMinimumSize(size);
+            ratingLabel.setBounds(x, 0, size.width, size.height);
+            add(ratingLabel);
+        }
+
+        // Method to add the remove button
+        private void addRemoveButton(int x, Dimension size) {
+            JButton btnRemove = new JButton("Remove");
+            btnRemove.setBounds(x, 0, 133, 35);
+            btnRemove.setPreferredSize(size);
+            btnRemove.setMaximumSize(size);
+            btnRemove.setMinimumSize(size);
+            btnRemove.setHorizontalAlignment(SwingConstants.CENTER);
+            btnRemove.setFocusable(false);
+            
+            // Adding ActionListener to remove the panel from the ArrayList
+            btnRemove.addActionListener(e -> {
+                arraylist.remove(this); // Remove this panel from the ArrayList
+                refreshPanels();
+            });
+            
+            add(btnRemove);
+        }
     }
+
 }
