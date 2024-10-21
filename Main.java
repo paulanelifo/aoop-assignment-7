@@ -20,10 +20,9 @@ public class Main {
 
         pnlForScroll.revalidate(); // Refresh layout
         pnlForScroll.repaint(); // Update display
-    }
-
-    
+    }    
     public static void main(String[] args) {
+        refreshPanels();
         // The Frame
         JFrame mainFrame = new JFrame("Restaurant Reviewer") {{
             setSize(790, 275);
@@ -33,6 +32,143 @@ public class Main {
             setResizable(false);
         }};
 
+        addHeaders(mainFrame); //add header panels
+
+        // main scroll pane
+        JScrollPane scrollPane = new JScrollPane() {{
+            setBounds(10, 46, 755, 144);
+            setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        }};
+        scrollPane.setViewportView(pnlForScroll);
+        mainFrame.add(scrollPane);
+        // Add button
+        JButton btnAdd = new JButton("Add") {{
+            setBounds(10, 190, 754, 35);
+            setHorizontalAlignment(CENTER);
+            setFocusable(false);
+        }};
+        btnAdd.addActionListener(e -> {
+            // Create a JPanel for data entry form
+            JDialog EntryDialog = new JDialog(mainFrame, "Review Entry", true){{
+                setLayout(null);
+                setPreferredSize(new Dimension(500,220));
+                setResizable(false);
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                setLocationRelativeTo(null);
+            }};
+
+            //RESTAURANT
+            JLabel lbl1 = new JLabel("Restaurant"){{
+                setBounds(2, 8, 70, 20);
+                setHorizontalAlignment(CENTER);
+//                setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+//                setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            }};
+            EntryDialog.add(lbl1);
+            JTextField tfRestaurantName = new JTextField(){{
+                setBounds(73, 2, 400, 35);
+                setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            }};
+            EntryDialog.add(tfRestaurantName);
+            //REVIEWER
+            JLabel lbl2 = new JLabel("Reviewer"){{
+                setBounds(2, 44, 70, 20);
+                setHorizontalAlignment(CENTER);
+//                setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+//                setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            }};
+            EntryDialog.add(lbl2); 
+            JTextField tfReviewer = new JTextField(){{
+                setBounds(73, 38, 400, 35);
+                setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            }};
+            EntryDialog.add(tfReviewer);
+            //REVIEW
+            JLabel lbl3 = new JLabel("Review"){{
+                setBounds(2, 80, 70, 20);
+                setHorizontalAlignment(CENTER);
+//                setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+//                setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            }};
+            EntryDialog.add(lbl3); 
+            JTextField tfReview = new JTextField(){{
+                setBounds(73, 74, 400, 35);
+                setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            }};
+            EntryDialog.add(tfReview);
+            //RATING
+            JLabel lbl4 = new JLabel("Rating"){{
+                setBounds(2, 116, 70, 20);
+                setHorizontalAlignment(CENTER);
+//                setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+//                setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            }};
+            EntryDialog.add(lbl4); 
+            JPanel pnlRButtons = new JPanel(){{
+                setBounds(73, 110, 400, 35);
+                setLayout(new GridLayout(1, 5));
+            }};
+            JRadioButton rating1 = new JRadioButton("1");
+            JRadioButton rating2 = new JRadioButton("2");
+            JRadioButton rating3 = new JRadioButton("3");
+            JRadioButton rating4 = new JRadioButton("4");
+            JRadioButton rating5 = new JRadioButton("5");
+            ButtonGroup grpRadioButtons = new ButtonGroup();
+            JRadioButton[] arrayRadioButtons = {rating1, rating2, rating3, rating4, rating5};
+            for(JRadioButton rb : arrayRadioButtons){
+                grpRadioButtons.add(rb);
+                rb.setFocusable(false);
+                pnlRButtons.add(rb);
+            }
+            EntryDialog.add(pnlRButtons);
+            
+            JButton btnSave = new JButton("Save"){{
+                setBounds(2, 150, 245, 25);
+                setFocusable(false);
+                addActionListener(e -> {
+                    String restaurantName = tfRestaurantName.getText();
+                    String reviewerName = tfReviewer.getText();
+                    String reviewText = tfReview.getText();
+                    int rating = 1; //default rating
+                    for(JRadioButton rb : arrayRadioButtons){
+                        if(rb.isSelected()){
+                            rating = Integer.parseInt(rb.getText());
+                            break;
+                        }
+                    }
+                    ReviewPanel reviewPanel = ReviewPanel.create(restaurantName, reviewerName, reviewText, rating);
+                    arraylist.add(reviewPanel);
+                    refreshPanels();
+                    EntryDialog.dispose();
+                });
+            }};
+            EntryDialog.add(btnSave);
+            JButton btnCancel = new JButton("Cancel"){{
+                setBounds(248, 150, 235, 25);
+                setFocusable(false);
+                addActionListener(e -> {
+                    EntryDialog.dispose();
+                });
+            }};
+            EntryDialog.add(btnCancel);
+            
+            //finalize the frame
+            EntryDialog.pack();
+            EntryDialog.setVisible(true);
+            
+            refreshPanels();
+        });
+        mainFrame.add(btnAdd);
+        
+        ReviewPanel reviewPanel = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 1);
+        arraylist.add(reviewPanel);
+        ReviewPanel reviewPanel1 = ReviewPanel.create("Restaurant B", "Reviewer B", "Excellent service!", 5);
+        arraylist.add(reviewPanel1);
+        
+        refreshPanels();
+        mainFrame.setVisible(true);
+    }
+    public static void addHeaders(JFrame mainFrame){
         // Just Labels - Column Headers
         JLabel lbl1 = new JLabel("Restaurant") {{
             setBounds(10, 10, 150, 35);
@@ -69,42 +205,7 @@ public class Main {
             setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         }};
         mainFrame.add(lbl5);
-        
-        JScrollPane scrollPane = new JScrollPane() {{
-            setBounds(10, 46, 755, 144);
-            setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        }};
-        scrollPane.setViewportView(pnlForScroll);
-        mainFrame.add(scrollPane);
-        // Add button
-        JButton btnAdd = new JButton("Add") {{
-            setBounds(10, 190, 754, 35);
-            setHorizontalAlignment(CENTER);
-            setFocusable(false);
-        }};
-        mainFrame.add(btnAdd);
-
-        // About panels
-        
-        ReviewPanel reviewPanel = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 1);
-        arraylist.add(reviewPanel);
-        ReviewPanel reviewPanel1 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 2);
-        arraylist.add(reviewPanel1);
-        ReviewPanel reviewPanel2 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 3);
-        arraylist.add(reviewPanel2);
-        ReviewPanel reviewPanel3 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 4);
-        arraylist.add(reviewPanel3);
-        ReviewPanel reviewPanel4 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 5);
-        arraylist.add(reviewPanel4);
-        ReviewPanel reviewPanel5 = ReviewPanel.create("Restaurant A", "Reviewer A", "Great food!", 5);
-        arraylist.add(reviewPanel5);
-        
-        refreshPanels();
-       
-
-        mainFrame.setVisible(true);
     }
-
     public static class ReviewPanel extends JPanel {
 //        private ArrayList<ReviewPanel> panelList; // Reference to the global ArrayList
         public int rating;                // Field for the rating
